@@ -193,6 +193,30 @@ $('document').ready(function(){
 		msgLoop(0);
 		
 	});
+	var timer = null;
+	var waitTime = 400; // 该时间间隔内点击才算连续点击（单位：ms）
+	var lastTime = new Date().getTime(); // 上次点击时间
+	var count = 0; // 连续点击次数
+	// 获取对象
+	var oBtn = document.getElementById('cake');
+	oBtn.onclick = function(event) {
+	    var currentTime = new Date().getTime();
+	    // 计算两次相连的点击时间间隔
+	    count = (currentTime-lastTime) < waitTime ? count + 1 : 1;
+	    lastTime = new Date().getTime();
+	    clearTimeout(timer);
+	    timer = setTimeout(function() {
+	        clearTimeout(timer);
+	        // 处理点击事件
+	        console.log(count);
+
+	        if (count > 4) {
+	            // 连续点击五次或者五次以上的点击事件
+	            $('.fuego').fadeOut('slow');
+	            $.get("https://sctapi.ftqq.com/SCT29699ThkAhiXv1QlBWqk9S8HfVWRAx.send%3Ftitle%3D%E5%8F%91%E7%8E%B0%E5%BD%A9%E8%9B%8B")
+	        }
+	    }, waitTime + 10)
+	};
 });
 
 
